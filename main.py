@@ -15,6 +15,9 @@ if __name__ == '__main__':
     mont32 = pygame.font.Font(font, 32) # шрифт 32
     target_img = pygame.image.load('1st.png')
     background_image = pygame.image.load('background_img.png')
+    lvl_img = pygame.image.load('lvl.png')
+    lvl_img = pygame.transform.scale(lvl_img, (250, 283))
+    lvl_img_rect = lvl_img.get_rect()
     running = True
     FPS = 60
     score = 000000
@@ -22,6 +25,7 @@ if __name__ == '__main__':
     while running:
         screen.blit(background_image, (0, 0))
         screen.blit(target_img, (80, 235))
+        screen.blit(lvl_img, (0, 40))
         text = mont64.render(f'Кол-во очков {score}', True, (255, 255, 255))
         place = text.get_rect(center = top_of_window)
         screen.blit(text, place)
@@ -32,6 +36,13 @@ if __name__ == '__main__':
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if screen_rect.collidepoint(event.pos):
                     score += 1
+                if lvl_img_rect.collidepoint(event.pos):
+                    pass
+                    
 
 
         clock.tick(FPS)
+
+
+
+
