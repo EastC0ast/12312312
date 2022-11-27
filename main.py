@@ -49,15 +49,15 @@ if __name__ == '__main__':
     ingame = True
     while running:
         screen.blit(background_image, (0, 0))
-        if level == 0:
+        if level == 0 or level == 2:
             screen.blit(lvl_img, (0, 40))
-            screen.blit(target_img, (80, 235))
+            if level == 0:
+                screen.blit(target_img, (80, 235))
+            else:
+                screen.blit(target3_img, (80, 235))
         elif level == 1:
             screen.blit(lvl2_img, (0, 40))
             screen.blit(target2_img, (80, 235))
-        elif level == 2:
-            screen.blit(lvl_img, (0, 40))
-            screen.blit(target3_img, (80, 235))
         text = mont64.render(f'Кол-во очков {score}', True, (255, 255, 255))
         place = text.get_rect(center=top_of_window)
         screen.blit(text, place)
