@@ -34,7 +34,7 @@ class Game:
         mont64, mont32 = pygame.font.Font(font, 64), pygame.font.Font(font, 32)
         target_img, target2_img, target3_img = pygame.image.load('1st.png'), pygame.image.load(
             '2nd.png'), pygame.image.load('3rd.png')
-        button = Button(
+        self.button = Button(
             self.screen,
             550,
             10,
