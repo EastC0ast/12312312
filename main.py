@@ -1,6 +1,3 @@
-import pygame
-import pygame_widgets
-import pygame_menu
 from Menu import Menu
 
 if __name__ == '__main__':

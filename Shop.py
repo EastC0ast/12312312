@@ -1,10 +1,12 @@
 import pygame
+from Game import Game
 
 
 class Shop:
 
-    def __init__(self, coins):
-        self.coins = coins
+    def __init__(self):
+        self.Game = Game()
+        self.coins = self.Game.score
 
     def buy_hero(self):
         pass

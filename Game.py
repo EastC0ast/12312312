@@ -25,6 +25,10 @@ class Game:
 
 
     def start_game(self):
+        x = 80
+        y = 270
+        v = 5
+        m = 1
         pygame.display.set_caption('My Hommie Uses Clicker')
         background_image = pygame.image.load('background_img.png')
         lvl_img, lvl2_img = pygame.image.load('lvl.png'), pygame.image.load('1lvl.png')
@@ -51,52 +55,72 @@ class Game:
         while running:
             self.screen.blit(background_image, (0, 0))
             if self.level == 0 or self.level == 2:
-                self.screen.blit(lvl_img, (0, 40))
+                self.cur_image = lvl_img
                 if self.level == 0:
-                    self.screen.blit(target_img, (80, 235))
+                    self.cur_target = target_img
                 else:
-                    self.screen.blit(target3_img, (80, 235))
+                    self.cur_target = target3_img
             elif self.level == 1:
-                self.screen.blit(lvl2_img, (0, 40))
-                self.screen.blit(target2_img, (80, 235))
+                self.cur_image = lvl2_img
+                self.cur_target = target2_img
+            self.screen.blit(self.cur_image, (0, 40))
+            self.screen.blit(self.cur_target, (x, y))
             text = mont64.render(f'Кол-во очков {self.score}', True, (255, 255, 255))
             place = text.get_rect(center=self.top_of_window)
             self.screen.blit(text, place)
             events = pygame.event.get()
             pygame_widgets.update(events)
+            isjump = False
             for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     running = False
                     quit()
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.ingame:
-                    if self.screen_rect.collidepoint(event.pos):
-                        if self.level == 0:
-                            self.score += 1
-                        elif self.level == 1:
-                            self.score += 2
-                        elif self.level == 2:
-                            self.score += 4
-                        elif self.level == 3:
-                            self.score += 8
-                        elif self.level == 4:
-                            self.score += 16
-                        elif self.level == 5:
-                            self.score += 32
-                    if lvl_img_rect.collidepoint(event.pos):
-                        if self.score >= 100:
+                if not isjump:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.ingame:
+                        if self.screen_rect.collidepoint(event.pos):
                             if self.level == 0:
-                                self.level += 1
-                                self.score -= 100
-                            if self.score >= 500:
-                                if self.level == 1:
+                                self.score += 1
+                            elif self.level == 1:
+                                self.score += 2
+                            elif self.level == 2:
+                                self.score += 4
+                            elif self.level == 3:
+                                self.score += 8
+                            elif self.level == 4:
+                                self.score += 16
+                            elif self.level == 5:
+                                self.score += 32
+                        if lvl_img_rect.collidepoint(event.pos):
+                            if self.score >= 100:
+                                if self.level == 0:
                                     self.level += 1
-                                    self.score -= 500
-                                if self.score >= 1000:
-                                    if self.level == 2:
-                                        self.level += 0
-                                        self.score -= 1000
-                pygame.display.update()
+                                    self.score -= 100
+                                if self.score >= 500:
+                                    if self.level == 1:
+                                        self.level += 1
+                                        self.score -= 500
+                                    if self.score >= 1000:
+                                        if self.level == 2:
+                                            self.level += 0
+                                            self.score -= 1000
+            mouse = pygame.mouse.get_pressed()
+            if isjump == False:
+                if mouse[0]:
+                    isjump = True
+            if isjump:
+                F = (1 / 2) * m * (v ** 2)
+                y -= F
+                print(y)
+                v = v - 1
+                if v < 0:
+                    m = -1
+                if v == -6:
+                    isjump = False
+                    v = 5
+                    m = 1
+            pygame.time.delay(10)
+            pygame.display.update()
 
     def exit_game(self):
         pass
