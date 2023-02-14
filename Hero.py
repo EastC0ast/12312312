@@ -1,5 +1,5 @@
 import pygame
-
+from Game import Game
 
 class Hero:
 
@@ -7,9 +7,8 @@ class Hero:
         self.rect = rect
         self.xcord = xcord
         self.ycord = ycord
+        self.game = Game()
 
-    def click_hero(self):
-        pass
 
     def current_skin(self):
         pass

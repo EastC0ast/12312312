@@ -9,7 +9,7 @@ class Menu:
 
     def start_menu(self):
         pygame.init()
-        menu = pygame_menu.Menu('Welcome', 650, 800,
+        menu = pygame_menu.Menu('Welcome', 800, 500,
                                 theme=pygame_menu.themes.THEME_BLUE)
         menu.add.button('Play', self.game.start_game)
         menu.add.button('Quit', pygame_menu.events.EXIT)
