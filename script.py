@@ -14,13 +14,8 @@ class Game:
 
         self.game_exit = False
         self.COSTS = [25, 123, 828, 650, 5000]
-        self.background = pygame.image.load("img/background.png")
-        self.background1 = pygame.image.load("img/background1.png")
-        self.background2 = pygame.image.load("img/background2.png")
-
+     
         self.main_hero = pygame.image.load("img/hero.png")
-        self.main_hero1 = pygame.image.load("img/hero1.png")
-        self.main_hero2 = pygame.image.load("img/hero2.png")
 
         self.cursor = pygame.image.load("img/cursor.png")
         self.bed = pygame.image.load("img/bed.png")
