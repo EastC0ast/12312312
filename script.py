@@ -34,6 +34,16 @@ class Game:
             pygame.image.load("img/hero2.png"),
         ]
 
+        self.blink_hero = [
+            pygame.image.load("img/hero.png"),
+            pygame.image.load("img/hero_1.png"),
+        ]
+
+        self.blink_hero1 = [
+            pygame.image.load("img/hero1.png"),
+            pygame.image.load("img/hero1_1.png"),
+        ]
+
         self.score = records[0][0]
         self.level = records[0][1]
 
@@ -42,13 +52,13 @@ class Game:
         self.chems = records[0][4]
 
         self.counter = records[0][5]
+        self.player_anim_count = 0
 
         self.prev_count_cursor = records[0][6]
         self.prev_count_bed = records[0][7]
         self.prev_count_chem = records[0][8]
         cur.close()
         self.game_display = pygame.display.set_mode((800, 500))
-
         pygame.mixer.init(44100, -16, 2, 2048)
         self.bg_sound = pygame.mixer.Sound('sound/Sugar-Lime.mp3')
         self.bg_sound.play()
@@ -73,6 +83,9 @@ class Game:
             pos = pygame.mouse.get_pos()
             if self.main_hero.get_rect().move((10, 50)).collidepoint(pos):
                 self.score += 1
+                self.player_anim_count += 1
+                if self.player_anim_count == 2:
+                    self.player_anim_count = 0
             elif self.cursor.get_rect().move((600, 40)).collidepoint(pos):
                 if self.score >= self.COSTS[0]:
                     if self.cursors < 1242:
@@ -103,8 +116,7 @@ class Game:
                     if self.level < 1242:
                         self.score -= self.COSTS[4]
                         self.score, self.level, self.cursors, self.beds, self.chems, \
-                        self.counter, self.prev_count_chem, self.prev_count_bed, self.prev_count_cursor = (0 for _ in
-                                                                                                           range(9))
+                        self.counter, self.prev_count_chem, self.prev_count_bed, self.prev_count_cursor = (0 for _ in range(9))
 
     def draw_text(self, fontsize, text, coord):
         font = pygame.font.match_font('Mont')
@@ -143,6 +155,14 @@ class Game:
         self.game_display.blit(self.bed, (12, 368))
         self.game_display.blit(self.chem, (12, 432))
 
+    def change_hero(self):
+        if self.level == 0:
+            self.game_display.blit(self.blink_hero[self.player_anim_count], (8, 62))
+        elif self.level == 1:
+            self.game_display.blit(self.blink_hero1[self.player_anim_count], (8, 62))
+        elif self.level == 2:
+            self.game_display.blit(self.heroes[self.level], (8, 62))
+
     def game_loop(self):
         while not self.game_exit:
             for event in pygame.event.get():
@@ -151,11 +171,12 @@ class Game:
                     exit()
 
             self.game_display.blit(self.bgs[self.level], (0, 0))
-            self.game_display.blit(self.heroes[self.level], (8, 62))
 
+            self.change_hero()
             self.draw_shop()
             self.draw_improvements()
             self.draw_texts()
+
 
             self.counter += 1
 
