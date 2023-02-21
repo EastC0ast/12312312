@@ -74,7 +74,7 @@ class Game:
         cur.close()
 
     def process_mouse(self, event):
-        from Menu import Menu
+        from menu import Menu
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             if self.main_hero.get_rect().move((10, 50)).collidepoint(pos):
