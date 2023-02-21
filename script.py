@@ -77,7 +77,7 @@ class Game:
             self.con.rollback()
         cur.close()
 
-    def process_mouse(self, event):
+        def process_mouse(self, event):
         from menu import Menu
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
@@ -116,11 +116,15 @@ class Game:
                     if self.level < 1242:
                         self.score -= self.COSTS[4]
                         self.score, self.level, self.cursors, self.beds, self.chems, \
-                        self.counter, self.prev_count_chem, self.prev_count_bed, self.prev_count_cursor = (0 for _ in range(9))
+                        self.counter, self.prev_count_chem, self.prev_count_bed, self.prev_count_cursor = (0 for _ in
+                                                                                                           range(9))
                         self.bg_sound.stop()
                         self.update()
                         menu = Menu('Play Again')
                         menu.start_menu()
+        elif event.type == pygame.KEYDOWN and event.type != pygame.KEYUP:
+            if event.key == pygame.K_9:
+                self.score += 1000
 
     def draw_text(self, fontsize, text, coord):
         font = pygame.font.match_font('Mont')
